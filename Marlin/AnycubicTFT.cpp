@@ -191,21 +191,26 @@ void AnycubicTFTClass::Ls()
   if(card.cardOK)
   {
     uint8_t cnt=0;
+    String fname = "";
     for(cnt=0; cnt<card.getnrfilenames(); cnt++){
       card.getfilename(cnt);
-      
+      fname = card.longFilename;
       if((MyFileNrCnt-filenumber)<4)
       {
         if(fileoutputcnt<MyFileNrCnt-filenumber)
         {
+          if(fname.endsWith(".gcode")){
           ANYCUBIC_SERIAL_PROTOCOLLN(card.filename);
           ANYCUBIC_SERIAL_PROTOCOLLN(card.longFilename);
+          }
         }
       }
       else if((fileoutputcnt>=((MyFileNrCnt-4)-filenumber))&&(fileoutputcnt<MyFileNrCnt-filenumber))
       {
+        if(fname.endsWith(".gcode")){
         ANYCUBIC_SERIAL_PROTOCOLLN(card.filename);
         ANYCUBIC_SERIAL_PROTOCOLLN(card.longFilename);
+        }
       }
       fileoutputcnt++;
     }
